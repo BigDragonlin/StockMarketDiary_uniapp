@@ -1,6 +1,6 @@
 import App from './App'
 import i18n from './lang/i18n'
-
+import pinia from './store'
 
 // #ifndef VUE3
 import Vue from 'vue'
@@ -20,6 +20,7 @@ import {createSSRApp} from 'vue'
 export function createApp() {
 	const app = createSSRApp(App)
 	app.use(i18n)
+	app.use(pinia)
 	return {app}
 }
 // #endif

@@ -1,5 +1,5 @@
 <template>
-  <view class="analysis-page" :class="{ dark: isDarkMode }">
+  <view class="analysis-page">
     <view class="content">
       <view 
         v-for="item in analysisItems" 
@@ -16,10 +16,7 @@
 
 <script setup>
 import { computed } from 'vue'
-import { useSettingsStore } from '@/store'
-
-const settingsStore = useSettingsStore()
-const isDarkMode = computed(() => settingsStore.isDarkMode)
+import { useSettingsStore } from '../../store'
 
 const analysisItems = [
   {

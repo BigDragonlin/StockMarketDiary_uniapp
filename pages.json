@@ -1,6 +1,13 @@
 {
 	"pages": [
 		{
+			"path": "pages/transactions/test",
+			"style": {
+				"navigationBarTitleText": "测试",
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "投资复盘",
@@ -258,17 +265,15 @@
 		"list": [
 			{
 				"pagePath": "pages/index/index",
-				// "iconPath": "static/tabbar/dashboard.png",
-				// "selectedIconPath": "static/tabbar/dashboard-active.png",
-				"text": "仪表首页"
+				"text": "仪表"
 			},
 			{
 				"pagePath": "pages/transactions/list",
-				"text": "交易列表"
+				"text": "交易"
 			},
 			{
 				"pagePath": "pages/analysis/index",
-				"text": "分析首页"
+				"text": "分析"
 			},
 			{
 				"pagePath": "pages/ucenter/ucenter",

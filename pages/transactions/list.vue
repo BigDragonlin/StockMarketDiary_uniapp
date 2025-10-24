@@ -39,7 +39,8 @@
 
 <script setup>
 import { computed } from 'vue'
-import { useTransactionStore, useSettingsStore } from '@/store'
+// TOOD:这里要改成绝对路径
+import { useTransactionStore, useSettingsStore } from '../../store'
 
 const transactionStore = useTransactionStore()
 const settingsStore = useSettingsStore()
