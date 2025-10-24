@@ -12,40 +12,24 @@
       <view class="content">
         <!-- 时间范围选择 -->
         <view class="time-range">
-          <view 
-            v-for="range in timeRanges" 
-            :key="range.key"
-            class="time-btn"
-            :class="{ active: selectedRange === range.key }"
-            @tap="selectedRange = range.key"
-          >
+          <view v-for="range in timeRanges" :key="range.key" class="time-btn"
+            :class="{ active: selectedRange === range.key }" @tap="handleRangeChange(range.key)">
             {{ range.label }}
           </view>
         </view>
 
         <!-- 核心指标 -->
-        <view class="metrics-grid">
-          <view class="metric-card">
-            <text class="metric-label">总盈亏</text>
+        <view class="metrics-grid" :style="metricsGridStyle">
+          <view v-for="metric in metricsData" :key="metric.key" class="metric-card" :style="metricCardStyle">
+            <text class="metric-label">{{ metric.label }}</text>
             <view class="metric-value-row">
-              <text class="metric-value up">+¥5,680</text>
-              <text class="metric-change up">+11.3%</text>
+              <text class="metric-value" :class="metric.trend" :style="metricValueStyle">
+                {{ metric.value }}
+              </text>
+              <text v-if="metric.change" class="metric-change" :class="metric.trend">
+                {{ metric.change }}
+              </text>
             </view>
-          </view>
-          <view class="metric-card">
-            <text class="metric-label">交易胜率</text>
-            <view class="metric-value-row">
-              <text class="metric-value">62.5%</text>
-              <text class="metric-change up">+5.2%</text>
-            </view>
-          </view>
-          <view class="metric-card">
-            <text class="metric-label">盈亏比</text>
-            <text class="metric-value">1.85</text>
-          </view>
-          <view class="metric-card">
-            <text class="metric-label">跑赢沪深300</text>
-            <text class="metric-value up">+6.1%</text>
           </view>
         </view>
 
@@ -62,12 +46,8 @@
         <view class="section">
           <text class="section-title">智能洞察</text>
           <view class="insights">
-            <view 
-              v-for="insight in insights" 
-              :key="insight.type"
-              class="insight-card"
-              @tap="navigateToAnalysis(insight.type)"
-            >
+            <view v-for="insight in insights" :key="insight.type" class="insight-card"
+              @tap="navigateToAnalysis(insight.type)">
               <view class="insight-content">
                 <text class="insight-icon">{{ insight.icon }}</text>
                 <view class="insight-text">
@@ -87,12 +67,8 @@
             <text class="section-more" @tap="viewAllTransactions">查看全部</text>
           </view>
           <view class="transactions">
-            <view 
-              v-for="item in recentTransactions" 
-              :key="item.id"
-              class="transaction-item"
-              @tap="navigateToDetail(item.id)"
-            >
+            <view v-for="item in recentTransactions" :key="item.id" class="transaction-item"
+              @tap="navigateToDetail(item.id)">
               <view class="transaction-header">
                 <view class="transaction-info">
                   <view class="transaction-badge" :class="item.type">
@@ -120,11 +96,6 @@
         </view>
       </view>
     </scroll-view>
-
-    <!-- 悬浮添加按钮 -->
-    <view class="fab" @tap="navigateToAdd">
-      <uni-icons type="plus" size="32" color="#FFFFFF"></uni-icons>
-    </view>
   </view>
 </template>
 
@@ -139,6 +110,10 @@ const statusBarHeight = ref(0)
 const selectedRange = ref('3m')
 const isDarkMode = computed(() => settingsStore.isDarkMode)
 
+// 屏幕信息
+const screenWidth = ref(0)
+const screenHeight = ref(0)
+
 const timeRanges = [
   { key: '1m', label: '近一月' },
   { key: '3m', label: '近三月' },
@@ -146,7 +121,67 @@ const timeRanges = [
   { key: 'all', label: '全部' }
 ]
 
-const insights = [
+// 核心指标数据（模拟接口返回数据）
+const metricsData = ref([
+  {
+    key: 'totalProfit',
+    label: '总盈亏',
+    value: '+¥5,680',
+    change: '+11.3%',
+    trend: 'up'
+  },
+  {
+    key: 'winRate',
+    label: '交易胜率',
+    value: '62.5%',
+    change: '+5.2%',
+    trend: 'up'
+  },
+  {
+    key: 'profitRatio',
+    label: '盈亏比',
+    value: '1.85',
+    change: null,
+    trend: null
+  },
+  {
+    key: 'benchmark',
+    label: '跑赢沪深300',
+    value: '+6.1%',
+    change: null,
+    trend: 'up'
+  }
+])
+
+// 动态样式计算
+const metricsGridStyle = computed(() => {
+  const gap = Math.max(12, screenWidth.value * 0.032) // 根据屏幕宽度计算间距
+  return {
+    gap: `${gap}rpx`
+  }
+})
+
+const metricCardStyle = computed(() => {
+  // 根据屏幕尺寸动态计算圆角
+  const baseRadius = Math.min(screenWidth.value * 0.08, 48)
+  const padding = Math.max(24, screenWidth.value * 0.04)
+
+  return {
+    borderRadius: `${baseRadius}rpx`,
+    padding: `${padding}rpx`
+  }
+})
+
+const metricValueStyle = computed(() => {
+  // 根据屏幕宽度动态调整字体大小
+  const baseFontSize = Math.min(screenWidth.value * 0.075, 56)
+
+  return {
+    fontSize: `${baseFontSize}rpx`
+  }
+})
+
+const insightsTab = [
   {
     type: 'top-strategy',
     icon: '🏆',
@@ -173,17 +208,86 @@ const insights = [
   }
 ]
 
+const insights = computed(() => {
+  return insightsTab.slice(0, 3)
+})
+
 const recentTransactions = computed(() => {
-  return transactionStore.transactions.slice(0, 5)
+  return transactionStore.transactions.slice(0, 3)
 })
 
 onMounted(() => {
   const systemInfo = uni.getSystemInfoSync()
   statusBarHeight.value = systemInfo.statusBarHeight || 0
-  
+  screenWidth.value = systemInfo.screenWidth || 375
+  screenHeight.value = systemInfo.screenHeight || 667
+
   settingsStore.loadFromStorage()
   transactionStore.loadFromStorage()
+
+  // 获取仪表盘数据
+  fetchDashboardData()
 })
+
+// 获取仪表盘数据（预留接口方法）
+async function fetchDashboardData() {
+  try {
+    // TODO: 后续替换为真实接口调用
+    // const response = await uni.request({
+    //   url: '/api/dashboard/metrics',
+    //   method: 'GET',
+    //   data: { timeRange: selectedRange.value }
+    // })
+    // metricsData.value = response.data
+
+    // 模拟接口延迟
+    await new Promise(resolve => setTimeout(resolve, 300))
+
+    // 模拟接口返回的数据（这里可以根据selectedRange动态计算）
+    metricsData.value = [
+      {
+        key: 'totalProfit',
+        label: '总盈亏',
+        value: '+¥5,680',
+        change: '+11.3%',
+        trend: 'up'
+      },
+      {
+        key: 'winRate',
+        label: '交易胜率',
+        value: '62.5%',
+        change: '+5.2%',
+        trend: 'up'
+      },
+      {
+        key: 'profitRatio',
+        label: '盈亏比',
+        value: '1.85',
+        change: null,
+        trend: null
+      },
+      {
+        key: 'benchmark',
+        label: '跑赢沪深300',
+        value: '+6.1%',
+        change: null,
+        trend: 'up'
+      }
+    ]
+  } catch (error) {
+    console.error('获取仪表盘数据失败:', error)
+    uni.showToast({
+      title: '数据加载失败',
+      icon: 'none'
+    })
+  }
+}
+
+// 切换时间范围
+function handleRangeChange(range) {
+  selectedRange.value = range
+  fetchDashboardData()
+}
 
 function navigateToAnalysis(type) {
   uni.navigateTo({
@@ -194,12 +298,6 @@ function navigateToAnalysis(type) {
 function navigateToDetail(id) {
   uni.navigateTo({
     url: `/pages/transactions/detail?id=${id}`
-  })
-}
-
-function navigateToAdd() {
-  uni.navigateTo({
-    url: '/pages/transactions/add'
   })
 }
 
@@ -262,7 +360,7 @@ function viewAllTransactions() {
   border-radius: 12rpx;
   font-size: 28rpx;
   color: #8E8E93;
-  
+
   &.active {
     background-color: #0A84FF;
     color: #FFFFFF;
@@ -274,14 +372,18 @@ function viewAllTransactions() {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 24rpx;
+  /* 默认值，会被动态样式覆盖 */
   margin-bottom: 48rpx;
 }
 
 .metric-card {
   background-color: #2C2C2E;
   border-radius: 32rpx;
+  /* 默认值，会被动态样式覆盖 */
   padding: 32rpx;
+  /* 默认值，会被动态样式覆盖 */
   border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
 }
 
 .metric-label {
@@ -299,13 +401,15 @@ function viewAllTransactions() {
 
 .metric-value {
   font-size: 56rpx;
+  /* 默认值，会被动态样式覆盖 */
   font-weight: 600;
   color: #FFFFFF;
-  
+  transition: font-size 0.3s ease;
+
   &.up {
     color: #FF3B30;
   }
-  
+
   &.down {
     color: #34C759;
   }
@@ -313,11 +417,11 @@ function viewAllTransactions() {
 
 .metric-change {
   font-size: 28rpx;
-  
+
   &.up {
     color: #FF3B30;
   }
-  
+
   &.down {
     color: #34C759;
   }
@@ -440,12 +544,12 @@ function viewAllTransactions() {
   padding: 8rpx 16rpx;
   border-radius: 999rpx;
   font-size: 24rpx;
-  
+
   &.buy {
     background-color: rgba(255, 59, 48, 0.1);
     color: #FF3B30;
   }
-  
+
   &.sell {
     background-color: rgba(52, 199, 89, 0.1);
     color: #34C759;
@@ -476,11 +580,11 @@ function viewAllTransactions() {
 
 .transaction-profit {
   font-size: 28rpx;
-  
+
   &.up {
     color: #FF3B30;
   }
-  
+
   &.down {
     color: #34C759;
   }
@@ -505,7 +609,6 @@ function viewAllTransactions() {
   font-size: 24rpx;
   color: #8E8E93;
 }
-
 .fab {
   position: fixed;
   bottom: 180rpx;
