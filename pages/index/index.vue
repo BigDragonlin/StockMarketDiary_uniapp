@@ -37,8 +37,7 @@
         <view class="section">
           <text class="section-title">业绩曲线</text>
           <view class="chart-card">
-            <text class="chart-placeholder">图表占位</text>
-            <text class="chart-hint">使用 uCharts 或 ECharts 实现</text>
+            <line-chart />
           </view>
         </view>
 
@@ -102,7 +101,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useTransactionStore, useSettingsStore } from '@/store'
-
+import lineChart from '../lineChart/lineChart'
 const transactionStore = useTransactionStore()
 const settingsStore = useSettingsStore()
 

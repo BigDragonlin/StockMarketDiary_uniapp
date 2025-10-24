@@ -27,7 +27,6 @@
 			</view>
 		</view>
 		<!-- 折线示例2-结束 -->
-		
 	</view>
 </template>
 
