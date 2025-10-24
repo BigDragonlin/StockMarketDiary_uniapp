@@ -1,3 +1,4 @@
+// 创建vue实例
 import App from './App'
 import i18n from './lang/i18n'
 import pinia from './store'

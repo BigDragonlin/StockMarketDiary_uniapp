@@ -268,17 +268,29 @@ function handleSave() {
   if (!isFormValid.value) return
 
   const transaction = {
+    // 买卖类型
     type: formData.value.type,
+    // 股票代码
     stockCode: formData.value.stockCode,
+    // 股票名称
     stockName: formData.value.stockName,
+    // 价格
     price: parseFloat(formData.value.price),
+    // 数量
     quantity: parseInt(formData.value.quantity),
-    tags: formData.value.tags,
-    notes: formData.value.notes,
-    emotion: formData.value.emotion,
+    // 目标止盈价
     targetPrice: formData.value.targetPrice ? parseFloat(formData.value.targetPrice) : undefined,
+    // 止损价
     stopLoss: formData.value.stopLoss ? parseFloat(formData.value.stopLoss) : undefined,
+    // 决策依据
+    tags: formData.value.tags,
+    // 详细记录 
+    notes: formData.value.notes,
+    // 情绪标记
+    emotion: formData.value.emotion,
+    // 日期
     date: new Date().toISOString().split('T')[0],
+    // 盈亏
     profit: 0
   }
 
