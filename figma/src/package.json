@@ -1,0 +1,30 @@
+{
+  "name": "investment-journal",
+  "version": "1.0.0",
+  "description": "投资复盘 - A股投资者的个人投资教练应用",
+  "main": "main.js",
+  "scripts": {
+    "dev:mp-weixin": "uni -p mp-weixin",
+    "build:mp-weixin": "uni build -p mp-weixin",
+    "dev:h5": "uni -p h5",
+    "build:h5": "uni build -p h5",
+    "dev:app": "uni -p app",
+    "build:app": "uni build -p app"
+  },
+  "dependencies": {
+    "@dcloudio/uni-app": "latest",
+    "@dcloudio/uni-components": "latest",
+    "@dcloudio/uni-h5": "latest",
+    "@dcloudio/uni-mp-weixin": "latest",
+    "@dcloudio/uni-ui": "latest",
+    "pinia": "^2.1.7",
+    "vue": "^3.4.0"
+  },
+  "devDependencies": {
+    "@dcloudio/types": "latest",
+    "@dcloudio/uni-cli-shared": "latest",
+    "@dcloudio/vite-plugin-uni": "latest",
+    "sass": "^1.69.5",
+    "vite": "latest"
+  }
+}

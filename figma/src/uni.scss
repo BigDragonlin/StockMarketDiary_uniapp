@@ -1,0 +1,58 @@
+/**
+ * UniApp 全局样式变量
+ */
+
+/* 颜色变量 */
+$uni-color-primary: #0A84FF;
+$uni-color-success: #FF3B30;
+$uni-color-warning: #ff9500;
+$uni-color-error: #34C759;
+
+/* 中国股市颜色 */
+$stock-up-color: #FF3B30;
+$stock-down-color: #34C759;
+
+/* 文字基本颜色 */
+$uni-text-color: #FFFFFF;
+$uni-text-color-inverse: #1A1A1A;
+$uni-text-color-grey: #8E8E93;
+$uni-text-color-placeholder: #6C6C70;
+$uni-text-color-disable: #3A3A3C;
+
+/* 背景颜色 */
+$uni-bg-color: #1A1A1A;
+$uni-bg-color-grey: #2C2C2E;
+$uni-bg-color-hover: #3A3A3C;
+$uni-bg-color-mask: rgba(0, 0, 0, 0.4);
+
+/* 边框颜色 */
+$uni-border-color: rgba(255, 255, 255, 0.1);
+
+/* 尺寸变量 */
+$uni-spacing-row-lg: 30rpx;
+$uni-spacing-row-base: 24rpx;
+$uni-spacing-row-sm: 16rpx;
+$uni-spacing-col-lg: 24rpx;
+$uni-spacing-col-base: 16rpx;
+$uni-spacing-col-sm: 12rpx;
+
+/* 行高 */
+$uni-line-height-base: 1.5;
+$uni-line-height-text: 1.8;
+
+/* 字体大小 */
+$uni-font-size-xs: 24rpx;
+$uni-font-size-sm: 26rpx;
+$uni-font-size-base: 28rpx;
+$uni-font-size-lg: 32rpx;
+$uni-font-size-xl: 36rpx;
+$uni-font-size-xxl: 40rpx;
+
+/* 圆角 */
+$uni-border-radius-sm: 8rpx;
+$uni-border-radius-base: 16rpx;
+$uni-border-radius-lg: 24rpx;
+$uni-border-radius-circle: 50%;
+
+/* 阴影 */
+$uni-shadow-base: 0 2rpx 16rpx rgba(0, 0, 0, 0.1);
