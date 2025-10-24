@@ -8,6 +8,13 @@
 			}
 		},
 		{
+			"path": "pages/test/test",
+			"style": {
+				"navigationBarTitleText": "测试",
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/transactions/list",
 			"style": {
 				"navigationBarTitleText": "交易列表",
@@ -259,6 +266,10 @@
 			{
 				"pagePath": "pages/index/index",
 				"text": "仪表"
+			},
+			{
+				"pagePath": "pages/test/test",
+				"text": "测试"
 			},
 			{
 				"pagePath": "pages/transactions/add",
