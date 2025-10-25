@@ -44,6 +44,7 @@
         <!-- 智能洞察 -->
         <view class="section">
           <text class="section-title">智能洞察</text>
+          <!-- <text class="section-more" @tap="viewAllTransactions">查看全部</text> -->
           <view class="insights">
             <view v-for="insight in insights" :key="insight.type" class="insight-card"
               @tap="navigateToAnalysis(insight.type)">
@@ -305,6 +306,13 @@ function viewAllTransactions() {
     url: '/pages/transactions/list'
   })
 }
+
+// 智能洞察
+// function viewAllInsights() {
+//   uni.switchTab({
+//     url: 'pages/analysis/detail'
+//   })
+// }
 </script>
 
 <style lang="scss" scoped>

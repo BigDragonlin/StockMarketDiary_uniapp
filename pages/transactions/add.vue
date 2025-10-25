@@ -186,6 +186,11 @@ const formData = ref({
   emotion: 50
 })
 
+// 股票名称
+const stockName = computed(() => {
+  formData.value.stockName || '贵州茅台'
+})
+
 const buyTagGroups = [
   {
     category: '技术面',

@@ -1,6 +1,5 @@
 <template>
     <view>test____</view>
-    <lineChart />
 </template>
 
 <script setup lang="ts" name="test">
